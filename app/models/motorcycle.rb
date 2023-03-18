@@ -11,6 +11,10 @@ class Motorcycle < ApplicationRecord
   validates :fuel_type, presence: true
 
   def image_url
-    Rails.application.routes.url_helpers.url_for(image) if image.attached?
+    if image.attached?
+      Rails.application.routes.url_helpers.rails_blob_url(image, only_path: true)
+    else
+      nil
+    end
   end
 end
